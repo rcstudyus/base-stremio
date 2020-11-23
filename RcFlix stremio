@@ -1,0 +1,30 @@
+const  { addonBuilder , serveHTTP , publishToCentral }   =  require ( 'stremio-addon-sdk' )
+
+const  builder  =  new  addonBuilder ( { 
+    id : 'org.myexampleaddon' , 
+    versão : '1.0.0' ,
+
+    nome : 'rcflix stremio' ,
+
+    // Propriedades que determinam quando o Stremio escolhe este complemento 
+    // isso significa que seu complemento será usado para fluxos do tipo 
+    catálogos de filmes : [ ] , 
+    recursos : [ 'stream' ] , 
+    tipos : [ 'filme' ] , 
+    idPrefixes : [ ' tt ' ] 
+} )
+
+// recebe o 
+construtor de função (args) . defineStreamHandler ( function ( args )  { 
+    if  ( args . type  ===  'movie'  &&  args . id  ===  'tt1254207' )  { 
+        // servir um stream para big buck bunny 
+        const  stream  =  {  url : 'http: // Distribution.bbb3d.renderfarming.net/video/mp4/bbb_sunflower_1080p_30fps_normal.mp4 '  } 
+        Return  Promise . resolve ( {  streams : [stream ]  } ) 
+    }  else  { 
+        // caso contrário, não retorna nenhum streams 
+        return  Promise . resolver ( {  streams : [ ]  } ) 
+    } 
+} )
+
+serveHTTP ( builder . getInterface ( ) ,  {  port : process . env . PORT  ||  7000  } ) 
+//publishToCentral("https://your-domain/manifest.json ") // <- invoque isto se quiser publicar seu addon e está acessível publicamente em "rcflix stremio"
